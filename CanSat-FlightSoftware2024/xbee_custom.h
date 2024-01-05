@@ -47,7 +47,7 @@ class XBEE_CUSTOM
   }
 
 
-  String readPacket()
+  String readRXPacket()
   {
     xbee.readPacket();
     if (xbee.getResponse().isAvailable()) 

@@ -7,7 +7,7 @@
 //PRESSURE, GPS_TIME, GPS_ALTITUDE, GPS_LATITUDE, GPS_LONGITUDE,
 //GPS_SATS, TILT_X, TILT_Y, CMD_ECHO [,,OPTIONAL_DATA]
 
-#define TEAM_ID 1062
+#define TEAM_ID 2027
 #define packetLength 6
 #define altitudeLen 5
 #define tempLen 5

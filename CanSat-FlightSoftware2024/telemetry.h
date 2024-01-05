@@ -2,10 +2,10 @@
 #include "returnstring.h"
 
 //TEAM_ID, MISSION_TIME, PACKET_COUNT, MODE, STATE, ALTITUDE,
-//11
-//HS_DEPLOYED, PC_DEPLOYED, MAST_RAISED, TEMPERATURE, VOLTAGE,
+//AIR_SPEED, HS_DEPLOYED, PC_DEPLOYED, TEMPERATURE, VOLTAGE,
 //PRESSURE, GPS_TIME, GPS_ALTITUDE, GPS_LATITUDE, GPS_LONGITUDE,
-//GPS_SATS, TILT_X, TILT_Y, CMD_ECHO [,,OPTIONAL_DATA]
+//GPS_SATS, TILT_X, TILT_Y, ROT_Z, CMD_ECHO [,,OPTIONAL_DATA]
+
 
 #define TEAM_ID 2027
 #define packetLength 6
@@ -46,7 +46,7 @@ String makeTelemetryPacket()
     String comma = ",";
 
     String packet = "1062";
-    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + (HS_deployed?"P":"N") + comma + (PC_deployed?"C":"N") + comma + (MAST_raised?"M":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + CMD_ECHO;
+    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_deployed?"C":"N") + comma + (MAST_raised?"M":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + CMD_ECHO;
     CMD_ECHO = "" ;
     return packet;
 }

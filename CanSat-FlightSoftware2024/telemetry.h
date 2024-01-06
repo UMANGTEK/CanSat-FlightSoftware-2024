@@ -18,10 +18,12 @@
 #define satLen 2
 #define tiltLen 6
 #define voltlen 4
+
 String str_states[] = { 
     "                   IDLE",
     "            LAUNCH_WAIT", 
     "                 ASCENT",
+    "      ROCKET_SEPARATION",
     "                DESCENT",
     " PARA_NOSECONE_DEPLOYED",
     "                 LANDED"
@@ -44,9 +46,10 @@ String makeTelemetryPacket()
     String TILT_X = printFloat(xAngle, tiltLen, 2, bnoValid);
     String TILT_Y = printFloat(yAngle, tiltLen, 2, bnoValid);
     String comma = ",";
+    String AIR_SPEED = ""
 
-    String packet = "1062";
-    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_deployed?"C":"N") + comma + (MAST_raised?"M":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + CMD_ECHO;
+    String packet = "2027";
+    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + CMD_ECHO;
     CMD_ECHO = "" ;
     return packet;
 }

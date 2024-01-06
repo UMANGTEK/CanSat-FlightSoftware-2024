@@ -22,7 +22,7 @@ void servoSetup()
 void deployParachute()//////////////////////////////////////////////////////////////////////////////////////////////////
 {
     // Turn servo to deploy prachute
-    PC_deployed = true ;
+    PARA_DEPLOYED = true ;
     paraServo.write(parachuteDeployAngle);
     return ;
 }
@@ -38,6 +38,7 @@ void lockPrachute()/////////////////////////////////////////////////////////////
 void deployNoseCone() //////////////////////////////////////////////////////////////////////////////////////////////////
 {
     // Turn servo to release nose cone
+    NOSE_RELEASED = true;
     noseServo.write(noseDeployAngle);
     return ;
 }

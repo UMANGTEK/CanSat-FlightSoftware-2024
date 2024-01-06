@@ -1,4 +1,4 @@
-#define MOVINGAVG 5
+ #define MOVINGAVG 5
 #define ERR_DIFF 1
 #define FRACTION 0.6
 float arr[MOVINGAVG]={0,0,0,0,0}; // add more zeros here if u are increasing MOVINGAVG

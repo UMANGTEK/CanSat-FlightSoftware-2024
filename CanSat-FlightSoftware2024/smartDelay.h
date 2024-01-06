@@ -10,11 +10,46 @@ void smartDelay() {
     previousMillis = currentMillis;
     
     // Perform the task
-    performTask();
+    repetitive_Task();
   }
 }
 
-void performTask() {
-  // Your task code here
+void repetitive_Task() {
+   packet_count ++;
+
+  // Read Sensor Data
+  //GPS data
+  gpsGetTime( &gpsSecond , &gpsMinute, &gpsHour , &gpsDay, &gpsMonth , &gpsYear , &dateValid , &timeValid);
+  gpsReading(&noSats , &lat , &lng , &gpsAltitude , &satsValid, &locValid  , &altValid );
+  //BNO data
+  bnoGetValues();
+  readVoltage();
+  //BMP data
+  bmpGetValues();
+
+  // Apply filter
+
+
+  //Process recieved commmands
+  //get packet
+  if ( packetAvailable() ) {
+    String packetRecieved = getOnePacket();
+    packetCheck(packetRecieved);
+  }
+
+  updateAlt(adjusted_alt);
+  //Make telemetry packet
+  String telemetry_string = makeTelemetryPacket();
+
+  //Transmit data to GCS over Xbee
+  if ( telemetry ){
+    sendDataTelemetry(telemetry_string);
+  }
+
+  //Save Data to sd card  
+  saveTelemetryInSdCard(telemetry_string);
+
+  // Save state to EEPROM
+  WriteALL();
   
 }

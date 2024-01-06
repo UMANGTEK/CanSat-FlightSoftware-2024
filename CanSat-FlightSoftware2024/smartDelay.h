@@ -1,4 +1,3 @@
-const unsigned long interval = 1000;  // Interval in milliseconds (1 second)
 unsigned long previousMillis = 0;    // Stores the last time the task was executed
 
 
@@ -41,11 +40,12 @@ void periodic_Task() {
   WriteALL();
   
 }
+//SmartDelay for telemetry packet of 1 second
 void smartDelay() {
   unsigned long currentMillis = millis();  // Get the current time
   
   // Check if it's time to perform the task
-  if (currentMillis - previousMillis >= interval) {
+  if (currentMillis - previousMillis >= packetTimePeriod) {
     // Update the last execution time
     previousMillis = currentMillis;
     

@@ -5,6 +5,6 @@
 Task yet to be done: <br>
 -RTCtime feature to be added. <br>
 -camera to be added. <br>
--<s>cmdProcessing to be done. </s><br>
+-<del>cmdProcessing to be done. </del><br>
 -xBee Comms file to be checked and included in major FSW. <br>
 -Pitot Tube code and data yet to be written <br>

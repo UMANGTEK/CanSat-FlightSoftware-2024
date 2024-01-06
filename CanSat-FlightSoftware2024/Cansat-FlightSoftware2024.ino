@@ -48,10 +48,21 @@ bool pressureValid = false ;
 bool SD_works = false;
 
 #include "servo.h"
-#include "eeprom_rw.h"
+//#include "reset.h"
+//#include "sdcard.h"
 #include "led_buzzer.h"
+#include "./sensors/battery.h"
+#include "./sensors/gpssensor.h"
+//#include "RTCtime.h"
+#include "checkheight.h"
+#include "eeprom_rw.h"
 #include "telemetry.h"
+#include "./sensors/bmpsensor.h"
+//#include "xbeeComms.h"
+#include "./sensors/bnosensor.h"
 #include "smartDelay.h"
+//#include "camera.h"
+//#include "cmdProcessing.h"
 
 void setup()
 {
@@ -65,7 +76,7 @@ void setup()
   led_buzzer_Setup();
   //setSyncProvider(getTeensy3Time);
   //resetSetup();
-  SDsetup();
+  //SDsetup();
   bnoSetup();
   bmpSetup();
   gpsSetup();
@@ -78,25 +89,26 @@ void setup()
   lockNoseCone();
 }
 
-void loop()
-{
+void loop(){
+  
    if ( bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid ){
     greenON();
-  }
+    }
   else{
     greenOFF();
-  }
+    } 
 
-  switch (currentState) {
+  switch (currentState){ 
     case IDLE:
       if (tilt_calibration) {
         int tilt_cal_status = bnoCalibration();
-        sendDataTelemetry(String("Tilt Calibration: ") + String(tilt_cal_status) + String("|"));
+        //sendDataTelemetry(String("Tilt Calibration: ") + String(tilt_cal_status) + String("|"));
         if ( !tilt_cal_status ) {
           tilt_calibration = false;
         }
       }
       break;
+      
     case LAUNCH_WAIT:
       // check if cansat has started accending if yes change state
       if ( movingUp() ) {
@@ -105,6 +117,9 @@ void loop()
       else if ( movingDown() ) {
         currentState = DECENT;
       }
+      bmpGetValues();
+      zero_alt_calib = altitude;
+      
       break;
     case ASCENT:
       // check if cansat has stopped accent and started going downwards ( decreasing altitude)
@@ -117,7 +132,7 @@ void loop()
       break;
     case ROCKET_SEPARATION:
       if(movingDown()){
-        currentState = DECENT
+        currentState = DECENT;
       }
       break;
     case DECENT:
@@ -139,9 +154,8 @@ void loop()
       break;
     default:
       break;
-
-
-  }
+     }
+     
   smartDelay();
   
 }

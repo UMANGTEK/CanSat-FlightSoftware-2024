@@ -1,4 +1,4 @@
- #define packetTimePeriod 1000
+#define packetTimePeriod 1000
 #include <TimeLib.h>
 
 
@@ -62,7 +62,7 @@ bool SD_works = false;
 #include "./sensors/bnosensor.h"
 #include "smartDelay.h"
 //#include "camera.h"
-//#include "cmdProcessing.h"
+#include "cmdProcessing.h"
 
 void setup()
 {
@@ -117,8 +117,6 @@ void loop(){
       else if ( movingDown() ) {
         currentState = DECENT;
       }
-      bmpGetValues();
-      zero_alt_calib = altitude;
       
       break;
     case ASCENT:
@@ -155,7 +153,7 @@ void loop(){
     default:
       break;
      }
-     
+  packetCheck("Command receive from xbee");   
   smartDelay();
   
 }

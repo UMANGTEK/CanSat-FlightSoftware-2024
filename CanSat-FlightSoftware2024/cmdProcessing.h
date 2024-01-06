@@ -14,7 +14,7 @@ bool ST(String p[])
 {   
     if ( p[3] == "GPS" ){
         //set time using gps
-        setTimeGps();
+     //   setTimeGps();
         return true;
     }
     else{
@@ -33,7 +33,7 @@ bool ST(String p[])
         int min = arrInt[1];
         int sec = arrInt[2];
         //set RTCtime 
-        setTime_td(hr,min,sec);
+     //   setTime_td(hr,min,sec);
         return true;
     }
 }
@@ -118,11 +118,11 @@ void packetCheck(String packet)
     else if (p[2] == "CAM")
     {
         if (p[3] == "ON"){
-            cameraStart();
+   //         cameraStart();
             CMD_ECHO = "CAM";
         }
         else if (p[3] == "OFF"){
-            cameraStop();
+  //          cameraStop();
             CMD_ECHO = "CAM";
         }
     }
@@ -162,16 +162,13 @@ void packetCheck(String packet)
         }
     }
     else if ( p[2] == "RESET" ){
-        lockProbe();
+        lockNoseCone();
         lockPrachute();
-        stopDeployingHeatSheild();
-        stopRaisingFlag();
         currentState = IDLE ;
         currentMode = FLIGHT ;
         packet_count = 0;
-        HS_deployed = false;
-        PC_deployed = false;
-        MAST_raised = false;
+        NOSE_RELEASED = false;
+        PARA_DEPLOYED = false;
         zero_alt_calib = 0;
 
         WriteALL();
@@ -181,39 +178,22 @@ void packetCheck(String packet)
         simulation_enabled = false;
         CMD_ECHO = "RESET";
     }
-    else if ( p[2] == "UNLOCK" ){
-        if ( currentState == IDLE ){
-            deployProbe();
-            CMD_ECHO = "UNLOCK";
-        }
-    }
-    else if ( p[2] == "LOCK"){
-        if ( currentState == IDLE ){
-            lockProbe();
-            CMD_ECHO = "LOCK";
-        }
-    }
-    else if ( p[2] == "BUZZER_OFF" ){////////////////////////////////////////////////////////////////
+    else if ( p[2] == "BUZZER_OFF" ){
         buzzerOFF();
     }
-    else if ( p[2] == "BUZZER_ON" ){//////////////////////////////////////////////////////////
+    else if ( p[2] == "BUZZER_ON" ){
         buzzerON();
     }
-    else if ( p[2] == "DEPLOY_LEGS" ){///////////////////////////////////////////////////////
-        deployHeatSheild();
-    }
-    else if ( p[2] == "DEPLOY_PROBE" ){//////////////////////////////////////////////////////////
-        deployProbe();
-    }
-    else if ( p[2] == "LOCK_PROBE" ){//////////////////////////////////////////////////////////////
-        lockProbe();
-    }
-    else if ( p[2] == "DEPLOY_PARA" ){//////////////////////////////////////////////////////////////////
+    else if ( p[2] == "DEPLOY_PARA" ){
         deployParachute();
     }
-    else if ( p[2] == "LOCK_PARA" ){/////////////////////////////////////////////////////////////////////
+    else if ( p[2] == "LOCK_PARA" ){
         lockPrachute();
     }
-    Serial.print(p[2]);
-    Serial.println("HEMLO");
+    else if ( p[2] == "DEPLOY_NOSE" ){
+        deployNoseCone();
+    }
+     else if ( p[2] == "LOCK_NOSE" ){
+        lockNoseCone();
+    }
 }

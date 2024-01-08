@@ -30,6 +30,7 @@ void deployParachute()
 void lockPrachute()
 {
     // Turn servo to lock prachute
+    PARA_DEPLOYED = false;
     paraServo.write(parachuteLockAngle);
     return ;
 }
@@ -46,6 +47,7 @@ void deployNoseCone()
 void lockNoseCone()
 {
     //Turn servo to lock nose cone
+    NOSE_RELEASED = false;
     noseServo.write(noseLockAngle);
     return ;
 }

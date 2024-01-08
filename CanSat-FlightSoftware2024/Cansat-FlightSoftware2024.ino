@@ -1,6 +1,7 @@
 #define packetTimePeriod 1000
 #include <TimeLib.h>
 
+String comm = "sad";
 
 enum states {
   IDLE ,
@@ -72,7 +73,7 @@ void setup()
   zero_alt_calib = EEreadFloat(4);
   NOSE_RELEASED = EEreadInt(5);
   PARA_DEPLOYED = EEreadInt(6);
-
+  Serial.begin(9600);
   led_buzzer_Setup();
   //setSyncProvider(getTeensy3Time);
   //resetSetup();
@@ -153,7 +154,11 @@ void loop(){
     default:
       break;
      }
-  packetCheck("Command receive from xbee");   
-  smartDelay();
-  
+     
+     if (Serial.available())
+      comm = Serial.readStringUntil('\n');
+     packetCheck(comm);
+     comm = "asdas";
+     
+     smartDelay();
 }

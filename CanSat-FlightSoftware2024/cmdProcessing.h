@@ -90,6 +90,7 @@ void packetCheck(String packet)
                 // impliment conversion from pressure to altitude 
                 // 44330 * [1 - (P/p0)^(1/5.255) ]
                 adjusted_alt=( 44330 * ( 1 - pow( (adjusted_pressure/ 1013.25 ), (1/5.225) )  )) - zero_alt_calib;
+                updateAlt(adjusted_alt);
                 pressureValid = true;
                 CMD_ECHO="SIMP";
             }

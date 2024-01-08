@@ -2,7 +2,7 @@ unsigned long previousMillis = 0;    // Stores the last time the task was execut
 
 
 void periodic_Task() {
-   packet_count ++;
+   packet_count++;
 
   // Read Sensor Data
   //GPS data
@@ -23,15 +23,16 @@ void periodic_Task() {
 //    String packetRecieved = getOnePacket();
 //    packetCheck(packetRecieved);
 //  }
-
-  updateAlt(adjusted_alt);
+  if(currentMode == FLIGHT)
+    updateAlt(adjusted_alt);
   //Make telemetry packet
   String telemetry_string = makeTelemetryPacket();
-
+  
   //Transmit data to GCS over Xbee
-//  if ( telemetry ){
-//    sendDataTelemetry(telemetry_string);
-//  }
+  if ( telemetry ){
+    //sendDataTelemetry(telemetry_string);
+    Serial.println(telemetry_string);
+  }
 
   //Save Data to sd card  
 //  saveTelemetryInSdCard(telemetry_string);

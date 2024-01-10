@@ -131,6 +131,7 @@ void packetCheck(String packet)
     {
         //only if in idle mode
         if( currentState == IDLE ){
+            zero_alt_calib = altitude;
             currentState = LAUNCH_WAIT;
             WriteALL();
         }

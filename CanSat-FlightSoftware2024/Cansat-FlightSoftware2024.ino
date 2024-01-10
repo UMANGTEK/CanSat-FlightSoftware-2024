@@ -1,6 +1,6 @@
 #define packetTimePeriod 1000
-#include <TimeLib.h>
-//Comment
+//#include <TimeLib.h>
+
 String comm = "sad";
 
 enum states {
@@ -156,7 +156,7 @@ void loop(){
      }
      
      if (Serial.available())
-      comm = Serial.readStringUntil('\n');
+      comm = Serial.readString();
      packetCheck(comm);
      comm = "asdas";
      

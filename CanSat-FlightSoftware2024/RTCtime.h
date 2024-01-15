@@ -4,14 +4,9 @@
 
 tmElements_t tm;
 
-void RTCsetup()  {
-  // set the Time library to use Teensy 3.0's RTC to keep time
-
-  if (timeStatus()!= timeSet) {
-      //RTC not syncing
-  } else {
-      //RTC synced
-  }
+bool RTCvalid()
+{
+  return RTC.read(tm);
 }
 
 void getRTCTime()

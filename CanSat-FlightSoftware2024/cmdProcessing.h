@@ -14,7 +14,7 @@ bool ST(String p[])
 {   
     if ( p[3] == "GPS" ){
         //set time using gps
-     //   setTimeGps();
+        setTimeGps();
         return true;
     }
     else{

@@ -32,11 +32,11 @@ String str_modes[] = { "F" , "S" };
 
 String makeTelemetryPacket()
 {
-    String MISSION_TIME = printTime( RTChour() ,RTCminute() , RTCseconds(), true  );
+    String MISSION_TIME = printTime(RTChour() ,RTCminute() , RTCseconds(), RTCvalid());
     String PACKET_COUNT = printInt(packet_count, packetLength, true); 
     String ALTITUDE = printFloat(adjusted_alt, altitudeLen, 1,pressureValid);
     String TEMPERATURE = printFloat(temprature, tempLen, 1,bmpValid);
-    String VOLTAGE = printFloat(voltage, voltlen, 1, true);
+    String VOLTAGE = printFloat(voltage, voltlen, 1, true);     
     String PRESSURE = printFloat(adjusted_pressure, pressLen, 1, pressureValid);
     String GPS_TIME = printTime( gpsHour ,gpsMinute, gpsSecond, timeValid  );
     String GPS_ALTITUDE = printFloat(gpsAltitude, altiLen, 1, altValid);

@@ -33,7 +33,7 @@ bool ST(String p[])
         int min = arrInt[1];
         int sec = arrInt[2];
         //set RTCtime 
-     //   setTime_td(hr,min,sec);
+        setTime_td(hr,min,sec);
         return true;
     }
 }
@@ -131,7 +131,6 @@ void packetCheck(String packet)
     {
         //only if in idle mode
         if( currentState == IDLE ){
-            zero_alt_calib = altitude;
             currentState = LAUNCH_WAIT;
             WriteALL();
         }

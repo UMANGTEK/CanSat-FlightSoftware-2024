@@ -1,5 +1,4 @@
 #define packetTimePeriod 1000
-//#include <TimeLib.h>
 
 String comm = "sad";
 
@@ -54,7 +53,7 @@ bool SD_works = false;
 #include "led_buzzer.h"
 #include "./sensors/battery.h"
 #include "./sensors/gpssensor.h"
-//#include "RTCtime.h"
+#include "RTCtime.h"
 #include "checkheight.h"
 #include "eeprom_rw.h"
 #include "telemetry.h"

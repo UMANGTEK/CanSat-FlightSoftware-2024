@@ -1,3 +1,8 @@
+#include <Wire.h>
+#include <TimeLib.h>
+#include <DS1307RTC.h>
+
+tmElements_t tm;
 
 void RTCsetup()  {
   // set the Time library to use Teensy 3.0's RTC to keep time
@@ -9,65 +14,69 @@ void RTCsetup()  {
   }
 }
 
-time_t getTeensy3Time()
+void getRTCTime()
 {
-  return Teensy3Clock.get();
+  RTC.read(tm);
+  return ;
 }
 
-time_t ttime( int h , int min , int sec , int d , int mon , int y ){
-    struct tm t;
-    time_t t_of_day;
-    t.tm_year = y - 1900;  // Year - 1900
-    t.tm_mon = mon ;           // Month, where 0 = jan
-    t.tm_mday = d ;          // Day of the month
-    t.tm_hour = h ;
-    t.tm_min = min ;
-    t.tm_sec = sec;
-    t.tm_isdst = -1;        // Is DST on? 1 = yes, 0 = no, -1 = unknown
-    t_of_day = mktime(&t);
-    return (t_of_day);
-}
 
 void setTimeGps()
 {
     gpsGetTime( &gpsSecond , &gpsMinute, &gpsHour , &gpsDay, &gpsMonth , &gpsYear , &dateValid , &timeValid);        
-    time_t t = ttime( gpsHour , gpsMinute , gpsSecond , gpsDay , gpsMonth , gpsYear); 
-
-    Teensy3Clock.set(t); // set the RTC
-    setTime(t);
-
+    
+    tm.Hour = gpsHour;
+    tm.Minute = gpsMinute;
+    tm.Second = gpsSecond;
+    tm.Day = gpsDay;
+    tm.Month = gpsMonth;
+    tm.Year = gpsYear;
+    
+    RTC.write(tm); // set the RTC
     return ;
 }
 
 void setTime_td( int h , int m , int s , int d , int month_ , int year_ ){
     //setTime(hours, minutes, seconds, days, months, years);
-    time_t t = ttime( h , m , s , d , month_ , year_); 
+    tm.Hour = h;
+    tm.Minute = m;
+    tm.Second = s;
+    tm.Day = d;
+    tm.Month = month_;
+    tm.Year = year_;
     
-    Teensy3Clock.set(t); // set the RTC
-    setTime(t);
+    RTC.write(tm); // set the RTC
 }
 
 void setTime_td( int h , int m , int s ){
-    //setTime(hours, minutes, seconds, days, months, years);
-    time_t t = ttime( h , m , s ,  day() , month() , year());
-    Teensy3Clock.set(t); // set the RTC
-    setTime(t);
+     //setTime(hours, minutes, seconds);
+    tm.Hour = h;
+    tm.Minute = m;
+    tm.Second = s;
+    
+    RTC.write(tm); // set the RTC
 }
 int RTCday(){
-    return(day());
+    RTC.read(tm);
+    return(tm.Day);
 }
 int RTCmonth(){
-    return( month());
+    RTC.read(tm);
+    return(tm.Month);
 }
 int RTCyear(){
-    return(year()); 
+    RTC.read(tm);
+    return(tm.Month); 
 }
 int RTCseconds(){
-    return(second());
+    RTC.read(tm);
+    return(tm.Second);
 }
 int RTChour(){
-    return(hour());
+    RTC.read(tm);
+    return(tm.Hour);
 }
 int RTCminute(){
-    return(minute());
+    RTC.read(tm);
+    return(tm.Minute);
 }

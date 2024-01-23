@@ -3,8 +3,9 @@ import picamera
 
 def record_video(duration, output_filename):
     withpicamera.PiCamera() as camera:
-        camera.resolution = (1920, 1080)
-        camera.framerate = 30
+        #(1280x720) (1920x1080)
+        camera.resolution = (1280, 720)
+        camera.framerate = 40
         camera.start_recording(output_filename)
         camera.wait_recording(duration)
         camera.stop_recording()

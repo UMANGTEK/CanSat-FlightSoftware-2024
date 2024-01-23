@@ -1,4 +1,4 @@
-#define packetTimePeriod 1000
+Q#define packetTimePeriod 1000
 
 String comm = "sad";
 
@@ -61,7 +61,6 @@ bool SD_works = false;
 //#include "xbeeComms.h"
 #include "./sensors/bnosensor.h"
 #include "smartDelay.h"
-//#include "camera.h"
 #include "cmdProcessing.h"
 
 void setup()

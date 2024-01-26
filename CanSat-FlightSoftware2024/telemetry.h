@@ -20,13 +20,14 @@
 #define voltlen 4
 
 String str_states[] = { 
-    "                   IDLE",
-    "            LAUNCH_WAIT", 
-    "                 ASCENT",
-    "      ROCKET_SEPARATION",
-    "                DESCENT",
-    " PARA_NOSECONE_DEPLOYED",
-    "                 LANDED"
+    "             IDLE",
+    "      LAUNCH_WAIT", 
+    "           ASCENT",
+    "ROCKET_SEPARATION",
+    "          DESCENT",
+    "      PS_DEPLOYED",
+    "      HS_RELEASED",
+    "           LANDED"
 };
 String str_modes[] = { "F" , "S" };
 

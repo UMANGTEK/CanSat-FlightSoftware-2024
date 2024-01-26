@@ -8,7 +8,8 @@ enum states {
   ASCENT ,
   ROCKET_SEPARATION,
   DECENT ,
-  PARA_NOSECONE_DEPLOYED ,
+  PS_DEPLOYED ,
+  HS_RELEASED,
   LANDED
 };
 enum modes {
@@ -48,7 +49,6 @@ bool pressureValid = false ;
 bool SD_works = false;
 
 #include "servo.h"
-//#include "reset.h"
 //#include "sdcard.h"
 #include "led_buzzer.h"
 #include "./sensors/battery.h"
@@ -73,8 +73,6 @@ void setup()
   PARA_DEPLOYED = EEreadInt(6);
   Serial.begin(9600);
   led_buzzer_Setup();
-  //setSyncProvider(getTeensy3Time);
-  //resetSetup();
   //SDsetup();
   bnoSetup();
   bmpSetup();

@@ -2,8 +2,8 @@
 
 
 #define nosePin 29
-#define noseDeployAngle 0
-#define noseLockAngle 100
+#define noseDeployAngle 110
+#define noseLockAngle 0
 
 #define parachutePin 9
 #define parachuteDeployAngle 0

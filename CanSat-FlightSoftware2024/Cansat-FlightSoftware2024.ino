@@ -1,4 +1,4 @@
-Q#define packetTimePeriod 1000
+#define packetTimePeriod 1000
 
 String comm = "sad";
 
@@ -8,8 +8,7 @@ enum states {
   ASCENT ,
   ROCKET_SEPARATION,
   DECENT ,
-  PS_DEPLOYED ,
-  HS_RELEASED,
+  PARA_NOSECONE_DEPLOYED,
   LANDED
 };
 enum modes {
@@ -78,9 +77,7 @@ void setup()
   bmpSetup();
   gpsSetup();
   //xbeeSetup();
-  //cameraSetup();
   servoSetup();
-  //RTCsetup();
 
   lockPrachute();
   lockNoseCone();

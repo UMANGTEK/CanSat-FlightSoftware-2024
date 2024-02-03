@@ -46,11 +46,12 @@ String makeTelemetryPacket()
     String GPS_SATS = printInt(noSats, satLen, satsValid);
     String TILT_X = printFloat(xAngle, tiltLen, 2, bnoValid);
     String TILT_Y = printFloat(yAngle, tiltLen, 2, bnoValid);
+    String ROT_Z = "";
     String comma = ",";
     String AIR_SPEED = "SPEED";
 
     String packet = "2027";
-    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + CMD_ECHO;
+    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + CMD_ECHO;
     CMD_ECHO = "" ;
     return packet;
 }

@@ -1,11 +1,11 @@
 #define MOVINGAVG 5
-#define FIR_TAP 3
+#define FIR_TAP 5
 #define ERR_DIFF 1
 #define FRACTION 0.6
 #define ALPHA 0.9
 
 float arr[MOVINGAVG] = {0, 0, 0, 0, 0};
-float fir_coeffs[FIR_TAP] = {0.2, 0.3, 0.5};  // Adjust coefficients as needed
+float fir_coeffs[FIR_TAP] = {0.2, 0.2, 0.2, 0.2, 0.2};  // Adjust coefficients as needed
 float fir_buffer[FIR_TAP] = {0};
 
 float y = 0;

@@ -44,9 +44,9 @@ String makeTelemetryPacket()
     String GPS_LATITUDE = printFloat(lat, latiLen, 6, locValid);
     String GPS_LONGITUDE = printFloat(lng, longiLen, 6, locValid);
     String GPS_SATS = printInt(noSats, satLen, satsValid);
-    String TILT_X = printFloat(xAngle, tiltLen, 2, bnoValid);
+    String TILT_X = printFloat(zAngle, tiltLen, 2, bnoValid);
     String TILT_Y = printFloat(yAngle, tiltLen, 2, bnoValid);
-    String ROT_Z = "";
+    String ROT_Z = printFloat(xAngle, tiltLen, 2, bnoValid);
     String comma = ",";
     String AIR_SPEED = "SPEED";
 

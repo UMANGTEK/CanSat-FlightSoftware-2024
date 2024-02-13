@@ -81,17 +81,25 @@ void setup()
 
   lockPrachute();
   lockNoseCone();
+  redON();
 }
 
 void loop(){
-  
-   if ( bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid ){
-    greenON();
-    }
-  else{
-    greenOFF();
-    } 
 
+  if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid )
+     {
+      blink(greenLED, 500);
+    }
+     else if(bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid)
+    {
+     greenON();
+    }
+    else
+    {
+     greenOFF();
+    }  
+
+   
   switch (currentState){ 
     case IDLE:
       if (tilt_calibration) {
@@ -150,8 +158,9 @@ void loop(){
      
      if (Serial.available())
       comm = Serial.readString();
+      
      packetCheck(comm);
      comm = "asdas";
-     
+
      smartDelay();
 }

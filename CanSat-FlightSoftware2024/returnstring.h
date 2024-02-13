@@ -160,6 +160,7 @@ String printTime(int hour, int minute, int second, bool valid)
     }
     else
     {
+        greenOFF();
         tim="********" ;  
     }
     return tim;

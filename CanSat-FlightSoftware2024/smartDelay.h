@@ -40,6 +40,9 @@ void periodic_Task() {
   // Save state to EEPROM
   WriteALL();
   
+  if(!bnoValid)
+    checkBno();
+  
 }
 //SmartDelay for telemetry packet of 1 second
 void smartDelay() {

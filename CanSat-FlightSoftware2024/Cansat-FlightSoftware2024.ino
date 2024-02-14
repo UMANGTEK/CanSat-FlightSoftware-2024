@@ -86,11 +86,11 @@ void setup()
 
 void loop(){
 
-  if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid )
+  if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid() )
      {
       blink(greenLED, 500);
     }
-     else if(bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid)
+     else if(bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid() )
     {
      greenON();
     }

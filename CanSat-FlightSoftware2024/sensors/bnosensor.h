@@ -50,6 +50,19 @@ void bnoGetValues(){
   zAngle = tz;
 }
 
+void checkBno()
+{
+  static int count = 1;
+
+  if (count == 3)
+  {
+    count = 1;
+    bnoSetup();
+    return;
+  }
+  count++;
+}
+
 void bnoGetXAcc(float *xAcc)
 {
   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);

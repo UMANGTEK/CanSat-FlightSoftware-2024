@@ -1,7 +1,7 @@
 #include <TinyGPSPlus.h>
 
 TinyGPSPlus gps;
-#define gpsSerial Serial5
+#define gpsSerial Serial2
 #define gpsBaud 9600
 
 void gpsSetup(){

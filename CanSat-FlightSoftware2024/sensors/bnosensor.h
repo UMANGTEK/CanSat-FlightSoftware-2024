@@ -4,7 +4,7 @@
 #include <utility/imumaths.h>
 #include <math.h>
 
-Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x28);
+Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x29);
 sensors_event_t event;
 
 void bnoSetup(){

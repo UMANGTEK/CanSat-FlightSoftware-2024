@@ -42,6 +42,9 @@ bool satsValid = false, locValid = false, altValid = false;
 int gpsSecond = 0 , gpsMinute = 0 , gpsHour = 0  , gpsDay = 0 , gpsMonth = 0, gpsYear = 0 ;
 bool timeValid = false , dateValid = false ;
 
+float pitotVelocity = 0;
+bool pitotValid = false;
+
 float adjusted_alt= 0 ;
 float adjusted_pressure= 0 ;
 bool pressureValid = false ;

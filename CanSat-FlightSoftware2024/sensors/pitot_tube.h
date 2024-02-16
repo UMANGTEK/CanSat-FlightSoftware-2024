@@ -13,7 +13,6 @@ void pitotSetup() {
   }
 }
 
-b
 
 void pitotRead() {
   if (pres.Read()) {

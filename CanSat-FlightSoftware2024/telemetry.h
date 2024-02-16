@@ -16,7 +16,7 @@
 #define latiLen 7
 #define longiLen 7
 #define satLen 2
-#define tiltLen 6
+#define tiltLen 7
 #define voltlen 4
 
 String str_states[] = { 

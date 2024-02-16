@@ -41,7 +41,7 @@ void deployParachute()
     PARA_DEPLOYED = true ;
     paraServo1.write(parachuteDeployAngle);
     paraServo2.write(parachuteDeployAngle);
-    paraServo2.write(parachuteDeployAngle);
+    paraServo3.write(parachuteDeployAngle);
     return ;
 }
 
@@ -72,6 +72,6 @@ void lockNoseCone()
     NOSE_RELEASED = false;
     noseServo1.write(noseLockAngle);
     noseServo2.write(noseLockAngle);
-    noseServo2.write(noseLockAngle);
+    noseServo3.write(noseLockAngle);
     return ;
 }

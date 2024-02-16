@@ -43,7 +43,7 @@ void packetCheck(String packet)
     int no_of_fields = 4 ;
     String p[4] = {"","","",""};
     parsePacket(packet,p,no_of_fields,',');
-    if (p[2] == "CX")
+    if (p[2] == "CX")                          // Compulsory Telemetrry on/off command
     {
         if (p[3] == "ON"){
             telemetry = true;
@@ -55,13 +55,13 @@ void packetCheck(String packet)
             CMD_ECHO="CX";
         }
     }
-    else if (p[2] == "ST")
+    else if (p[2] == "ST")                   // Compulsory set time command
     {
         if ( ST(p) ){
             CMD_ECHO="ST";
         }
     }
-    else if (p[2] == "SIM")
+    else if (p[2] == "SIM")                                 //Compulsory simulation toggle and control command
     {
         if ( currentState == IDLE ){
             if (p[3] == "ENABLE"){
@@ -80,7 +80,7 @@ void packetCheck(String packet)
             }
         }
     }
-    else if (p[2] == "SIMP")
+    else if (p[2] == "SIMP")                                      // Compulsory simulared pressure data receiving command
     {
         //Set pressure to recieved value 
         if ( currentMode == SIMULATION ){
@@ -96,7 +96,7 @@ void packetCheck(String packet)
             }
         }
     }
-    else if (p[2] == "CAL")
+    else if (p[2] == "CAL")                                             // Compulsory altitude calibration command    
     {
         //Set zero alt calibration ( only if in idle mode )
         if ( currentState == IDLE ){
@@ -116,6 +116,14 @@ void packetCheck(String packet)
         }
     }
 
+
+     else if (p[2] == "BCN")
+    {
+        if(p[3] == "ON")
+          buzzerON();
+        else if (p[3] == "OFF")
+          buzzerOFF();
+    }
     else if (p[2] == "START")
     {
         //only if in idle mode
@@ -168,12 +176,7 @@ void packetCheck(String packet)
         simulation_enabled = false;
         CMD_ECHO = "RESET";
     }
-    else if ( p[2] == "BUZZER_OFF" ){
-        buzzerOFF();
-    }
-    else if ( p[2] == "BUZZER_ON" ){
-        buzzerON();
-    }
+  
     else if ( p[2] == "DEPLOY_PARA" ){
         deployParachute();
     }

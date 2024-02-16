@@ -12,5 +12,5 @@ void battSetup()
 void readVoltage()
 {
   float vJun = analogRead(battPin)*3.3/1023; 
-  voltage = vJun*2.6;
+  voltage = vJun*2.6585;
 }

@@ -1,4 +1,6 @@
 #define packetTimePeriod 1000
+#define SEPARATION_ERR 30
+#define LANDED_ERR 1
 
 String comm = "sad";
 
@@ -124,15 +126,17 @@ void loop(){
       }
       
       break;
+      
     case ASCENT:
       // check if cansat has stopped accent and started going downwards ( decreasing altitude)
-      if ( movingDown() ) {
+      if (notMoving(SEPARATION_ERR) ) {
+         currentState = ROCKET_SEPARATION;
+      }
+      else if(movingDown()){
         currentState = DECENT;
       }
-      else if(notMoving()){
-        currentState = ROCKET_SEPARATION;
-      }
       break;
+      
     case ROCKET_SEPARATION:
       if(movingDown()){
         currentState = DECENT;
@@ -147,7 +151,7 @@ void loop(){
       }
       break;
     case PARA_NOSECONE_DEPLOYED:
-      if(notMoving()){
+      if(notMoving(LANDED_ERR)){
         currentState = LANDED;
       }
       break;

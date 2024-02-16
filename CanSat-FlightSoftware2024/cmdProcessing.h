@@ -162,6 +162,7 @@ void packetCheck(String packet)
     else if ( p[2] == "RESET" ){
         lockNoseCone();
         lockPrachute();
+        buzzerOFF();
         currentState = IDLE ;
         currentMode = FLIGHT ;
         packet_count = 0;

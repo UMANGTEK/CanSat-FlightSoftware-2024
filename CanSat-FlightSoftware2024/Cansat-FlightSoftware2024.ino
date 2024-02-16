@@ -10,7 +10,7 @@ enum states {
   ASCENT ,
   ROCKET_SEPARATION,
   DECENT ,
-  PARA_NOSECONE_DEPLOYED,
+  HS_RELEASED,
   LANDED
 };
 enum modes {
@@ -145,19 +145,19 @@ void loop(){
     case DECENT:
       // Check if altitude is less than 100m if yes change state to payload_separated
       if ( checkAlt(100) ) {
-        currentState = PARA_NOSECONE_DEPLOYED;
+        currentState = HS_RELEASED;
         deployNoseCone();
         deployParachute();
       }
       break;
-    case PARA_NOSECONE_DEPLOYED:
+    case HS_RELEASED:
       if(notMoving(LANDED_ERR)){
         currentState = LANDED;
       }
       break;
    
     case LANDED:
-     
+     buzzerON();
       break;
     default:
       break;

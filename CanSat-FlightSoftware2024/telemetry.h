@@ -25,7 +25,6 @@ String str_states[] = {
     "           ASCENT",
     "ROCKET_SEPARATION",
     "          DESCENT",
-    "      PS_DEPLOYED",
     "      HS_RELEASED",
     "           LANDED"
 };

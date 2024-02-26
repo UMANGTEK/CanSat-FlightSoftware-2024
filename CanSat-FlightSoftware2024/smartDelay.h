@@ -8,13 +8,17 @@ void periodic_Task() {
   //GPS data
   gpsGetTime( &gpsSecond , &gpsMinute, &gpsHour , &gpsDay, &gpsMonth , &gpsYear , &dateValid , &timeValid);
   gpsReading(&noSats , &lat , &lng , &gpsAltitude , &satsValid, &locValid  , &altValid );
+  
   //BNO data
   bnoGetValues();
+  
+  //Voltage
   readVoltage();
+  
   //BMP data
   bmpGetValues();
 
-  // Apply filter
+
 
 
   //Process recieved commmands
@@ -23,8 +27,10 @@ void periodic_Task() {
 //    String packetRecieved = getOnePacket();
 //    packetCheck(packetRecieved);
 //  }
+
   if(currentMode == FLIGHT)
     updateAlt(adjusted_alt);
+    
   //Make telemetry packet
   String telemetry_string = makeTelemetryPacket();
   
@@ -35,7 +41,7 @@ void periodic_Task() {
   }
 
   //Save Data to sd card  
-//  saveTelemetryInSdCard(telemetry_string);
+  saveTelemetryInSdCard(telemetry_string);
 
   // Save state to EEPROM
   WriteALL();
@@ -44,6 +50,7 @@ void periodic_Task() {
     checkBno();
   
 }
+
 //SmartDelay for telemetry packet of 1 second
 void smartDelay() {
   unsigned long currentMillis = millis();  // Get the current time

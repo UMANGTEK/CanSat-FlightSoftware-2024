@@ -1,15 +1,14 @@
 #define packetTimePeriod 1000
 #define SEPARATION_ERR 30
-#define LANDED_ERR 1
+#define LANDED_ERR 2
 
-String comm = "sad";
+String comm = "GARBAGE";
 
 enum states {
-  IDLE ,
-  LAUNCH_WAIT ,
-  ASCENT ,
+  LAUNCH_WAIT,
+  ASCENT,
   ROCKET_SEPARATION,
-  DECENT ,
+  DECENT,
   HS_RELEASED,
   LANDED
 };
@@ -18,9 +17,10 @@ enum modes {
   SIMULATION
 };
 
-int currentState = IDLE ;
+int currentState = LAUNCH_WAIT ;
 int currentMode = FLIGHT ;
 int packet_count = 0;
+int BCN = false;
 bool PARA_DEPLOYED = false;
 bool NOSE_RELEASED = false;
 
@@ -47,13 +47,13 @@ bool timeValid = false , dateValid = false ;
 float pitotVelocity = 0;
 bool pitotValid = false;
 
-float adjusted_alt= 0 ;
-float adjusted_pressure= 0 ;
+float adjusted_alt = 0 ;
+float adjusted_pressure = 0 ;
 bool pressureValid = false ;
 bool SD_works = false;
 
 #include "servo.h"
-//#include "sdcard.h"
+#include "sdcard.h"
 #include "led_buzzer.h"
 #include "./sensors/battery.h"
 #include "./sensors/gpssensor.h"
@@ -62,60 +62,51 @@ bool SD_works = false;
 #include "eeprom_rw.h"
 #include "telemetry.h"
 #include "./sensors/bmpsensor.h"
-//#include "xbeeComms.h"
+#include "xbeeComms.h"
 #include "./sensors/bnosensor.h"
 #include "smartDelay.h"
 #include "cmdProcessing.h"
 
 void setup()
 {
+  led_buzzer_Setup();
+  redON();
   currentState = EEreadInt(1);
   currentMode = EEreadInt(2);
   packet_count = EEreadInt(3);
   zero_alt_calib = EEreadFloat(4);
   NOSE_RELEASED = EEreadInt(5);
   PARA_DEPLOYED = EEreadInt(6);
+  BCN = EEreadInt(7);
   Serial.begin(9600);
-  led_buzzer_Setup();
-  //SDsetup();
+  SDsetup();
   bnoSetup();
   bmpSetup();
   gpsSetup();
   //xbeeSetup();
   servoSetup();
 
-  lockPrachute();
-  lockNoseCone();
-  redON();
+  BCN ? buzzerON() : buzzerOFF();
+  NOSE_RELEASED ? deployNoseCone() : lockNoseCone();
+  PARA_DEPLOYED ? deployParachute() : lockPrachute();
 }
 
-void loop(){
-
+void loop() {
   if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid() )
-     {
-      blink(greenLED, 500);
-    }
-     else if(bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid() )
-    {
-     greenON();
-    }
-    else
-    {
-     greenOFF();
-    }  
+  {
+    blink(greenLED, 500);
+  }
+  else if (bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid() )
+  {
+    greenON();
+  }
+  else
+  {
+    greenOFF();
+  }
 
-   
-  switch (currentState){ 
-    case IDLE:
-      if (tilt_calibration) {
-        int tilt_cal_status = bnoCalibration();
-        //sendDataTelemetry(String("Tilt Calibration: ") + String(tilt_cal_status) + String("|"));
-        if ( !tilt_cal_status ) {
-          tilt_calibration = false;
-        }
-      }
-      break;
-      
+
+  switch (currentState) {
     case LAUNCH_WAIT:
       // check if cansat has started accending if yes change state
       if ( movingUp() ) {
@@ -124,50 +115,71 @@ void loop(){
       else if ( movingDown() ) {
         currentState = DECENT;
       }
-      
+
       break;
-      
+
     case ASCENT:
       // check if cansat has stopped accent and started going downwards ( decreasing altitude)
       if (notMoving(SEPARATION_ERR) ) {
-         currentState = ROCKET_SEPARATION;
+        currentState = ROCKET_SEPARATION;
       }
-      else if(movingDown()){
+      else if (movingDown()) {
         currentState = DECENT;
       }
       break;
-      
+
     case ROCKET_SEPARATION:
-      if(movingDown()){
+      if (movingDown()) {
         currentState = DECENT;
       }
       break;
+
     case DECENT:
+      bmpGetValues();
+      if (currentMode == FLIGHT)
+        updateAlt(adjusted_alt);
+
       // Check if altitude is less than 100m if yes change state to payload_separated
-      if ( checkAlt(100) ) {
-        currentState = HS_RELEASED;
-        deployNoseCone();
+      if (checkAlt(120)) {
         deployParachute();
       }
+      if ( checkAlt(100) ) {
+        currentState = HS_RELEASED;
+        PARA_DEPLOYED = true ;
+        deployParachute();
+        deployNoseCone();
+        WriteALL();
+      }
       break;
+
     case HS_RELEASED:
-      if(notMoving(LANDED_ERR)){
+      if (notMoving(LANDED_ERR)) {
         currentState = LANDED;
       }
       break;
-   
+
     case LANDED:
-     buzzerON();
+      buzzerON();
       break;
+
     default:
       break;
-     }
-     
-     if (Serial.available())
-      comm = Serial.readString();
-      
-     packetCheck(comm);
-     comm = "asdas";
+  }
 
-     smartDelay();
+  if (Serial.available()) {
+    comm = Serial.readString();
+    packetCheck(comm);
+    comm = "GARBAGE_VALUE";
+  }
+
+
+  if ( packetAvailable() ) {
+    String packetRecieved = getOnePacket();
+    packetCheck(packetRecieved);
+  }
+
+
+
+
+  smartDelay();
 }

@@ -28,7 +28,8 @@ void WriteALL(){
         EEwriteInt(currentState , 1);
         EEwriteInt(currentMode, 2);
         EEwriteInt(packet_count, 3);
-        EEwriteInt(zero_alt_calib, 4);
+        EEwriteFloat(zero_alt_calib, 4);
         EEwriteInt(NOSE_RELEASED, 5);
         EEwriteInt(PARA_DEPLOYED, 6);
+        EEwriteInt(BCN, 7);
 }

@@ -1,4 +1,4 @@
-unsigned long previousMillisLED = 0;
+unsigned long previousMillisLEDS = 0;
 #define redLED 6
 #define blueLED 4
 #define greenLED 5
@@ -15,8 +15,8 @@ void blink(int pin, long duration) {
   unsigned long currentMillisLED = millis(); // Get the current time
   
   // Check if it's time to blink the LED
-  if (currentMillisLED - previousMillisLED >= duration) {
-    previousMillisLED = currentMillisLED; // Save the last time the LED was updated
+  if (currentMillisLED - previousMillisLEDS >= duration) {
+    previousMillisLEDS = currentMillisLED; // Save the last time the LED was updated
 
     // Toggle the LED state
     if (digitalRead(pin) == LOW) {
@@ -30,9 +30,11 @@ void blink(int pin, long duration) {
 
 void buzzerON(){
     digitalWrite(buzzerPIN,HIGH);
+    BCN = true;
 }
 void buzzerOFF(){
     digitalWrite(buzzerPIN,LOW);
+    BCN = false;
 }
 
 //LED ON

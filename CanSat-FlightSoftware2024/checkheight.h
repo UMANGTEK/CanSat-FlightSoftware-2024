@@ -52,7 +52,7 @@ bool movingUp(){
       j++;
     }
   }
-  if ( j > FRACTION * MOVINGAVG ){
+  if ( j >= FRACTION * MOVINGAVG ){
     return true;
   }
   else {
@@ -67,7 +67,7 @@ bool movingDown(){
       j++;
     }
   }
-  if ( j > FRACTION*MOVINGAVG ){
+  if ( j >= FRACTION*MOVINGAVG ){
     return true;
   }
   else {

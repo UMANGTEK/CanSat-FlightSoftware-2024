@@ -63,7 +63,7 @@ void packetCheck(String packet)
     }
     else if (p[2] == "SIM")                                 //Compulsory simulation toggle and control command
     {
-        if ( currentState == IDLE ){
+        if ( currentState == LAUNCH_WAIT ){
             if (p[3] == "ENABLE"){
                 simulation_enabled = true ;
                 CMD_ECHO="SIM";
@@ -98,8 +98,8 @@ void packetCheck(String packet)
     }
     else if (p[2] == "CAL")                                             // Compulsory altitude calibration command    
     {
-        //Set zero alt calibration ( only if in idle mode )
-        if ( currentState == IDLE ){
+        //Set zero alt calibration ( only if in LAUNCH_WAIT mode )
+        if ( currentState == LAUNCH_WAIT ){
             if( currentMode == FLIGHT  ){
                 bmpGetValues();
                 if (bmpValid){
@@ -110,6 +110,7 @@ void packetCheck(String packet)
             }
             else if ( currentMode == SIMULATION ){
                 zero_alt_calib = adjusted_alt;
+                adjusted_alt = 0;
                 WriteALL();
                 CMD_ECHO = "CAL";
             }
@@ -119,24 +120,13 @@ void packetCheck(String packet)
 
      else if (p[2] == "BCN")
     {
+        CMD_ECHO = "BCN";
         if(p[3] == "ON")
           buzzerON();
         else if (p[3] == "OFF")
           buzzerOFF();
     }
-    else if (p[2] == "START")
-    {
-        //only if in idle mode
-        if( currentState == IDLE ){
-            currentState = LAUNCH_WAIT;
-            WriteALL();
-        }
-    }
-    else if (p[2] == "IDLE")
-    {
-        currentState = IDLE;
-        WriteALL();
-    }
+   
     else if (p[2] == "LAUNCH_WAIT")
     {
         currentState = LAUNCH_WAIT;
@@ -151,43 +141,57 @@ void packetCheck(String packet)
     {
     currentMode = FLIGHT; 
     }
-    }*/
+    }
     else if (p[2] == "CAL_TILT")
     {
-        if ( currentState == IDLE ){
+        if ( currentState == LAUNCH_WAIT ){
             tilt_calibration = true;
             CMD_ECHO = "CAL_TILT";
         }
-    }
+    }*/
+    
     else if ( p[2] == "RESET" ){
         lockNoseCone();
         lockPrachute();
         buzzerOFF();
-        currentState = IDLE ;
+        currentState = LAUNCH_WAIT ;
         currentMode = FLIGHT ;
         packet_count = 0;
         NOSE_RELEASED = false;
         PARA_DEPLOYED = false;
-        zero_alt_calib = 0;
-
-        WriteALL();
-
         telemetry = true;
         tilt_calibration = false ;
         simulation_enabled = false;
         CMD_ECHO = "RESET";
+        
+         if (bmpValid){
+          bmpGetValues();
+          zero_alt_calib = altitude;
+          WriteALL();
+         }
+         else{
+          CMD_ECHO = "RESET_FAILED";
+         }
     }
   
     else if ( p[2] == "DEPLOY_PARA" ){
         deployParachute();
+        CMD_ECHO = "DEPLOY_PARA";
+        WriteALL();
     }
     else if ( p[2] == "LOCK_PARA" ){
         lockPrachute();
+        CMD_ECHO = "LOCK_PARA";
+        WriteALL();
     }
     else if ( p[2] == "DEPLOY_NOSE" ){
         deployNoseCone();
+        CMD_ECHO = "DEPLOY_NOSE";
+        WriteALL();
     }
      else if ( p[2] == "LOCK_NOSE" ){
         lockNoseCone();
+        CMD_ECHO = "LOCK_NOSE";
+        WriteALL();
     }
 }

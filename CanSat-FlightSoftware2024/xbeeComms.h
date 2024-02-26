@@ -1,7 +1,7 @@
 #include <string>
 #include <XBee.h>
 
-#define SoftSerial Serial8
+#define SoftSerial Serial7
 
 long int t1,t2;
 
@@ -12,7 +12,7 @@ ModemStatusResponse msr = ModemStatusResponse();
 XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x41F4267C);
 bool gotResponse,ack,associated,errorAfterPacketRecieved,errorReadingPacket,errorAfterResponseRecieved;
 
-String xbeeCommandinput = "";
+String xbeeCommandinput = "GARBAGE";
 
 void xbeeSetup(){
     SoftSerial.begin(9600);
@@ -33,7 +33,7 @@ void sendDataTelemetry(String data)
 
     ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
     xbee.send(zbTx);
-    Serial.println(data);
+    //Serial.println(data);
 }
 
 bool packetAvailable(){

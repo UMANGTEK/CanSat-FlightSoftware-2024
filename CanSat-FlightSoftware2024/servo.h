@@ -38,7 +38,6 @@ void servoSetup()
 void deployParachute()
 {
     // Turn servo to deploy prachute
-    PARA_DEPLOYED = true ;
     paraServo1.write(parachuteDeployAngle);
     paraServo2.write(parachuteDeployAngle);
     paraServo3.write(parachuteDeployAngle);

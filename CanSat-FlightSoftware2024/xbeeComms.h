@@ -80,7 +80,8 @@ void recieveDataTelemetry()
             //return this string
             xbeeCommandinput += recievedData;
             xbeeCommandinput += String("\n");
-            Serial.println(recievedData);
+            //Serial.println(recievedData);
+            packetRecieved = recievedData;
 
         } 
         else if (xbee.getResponse().getApiId() == MODEM_STATUS_RESPONSE) 

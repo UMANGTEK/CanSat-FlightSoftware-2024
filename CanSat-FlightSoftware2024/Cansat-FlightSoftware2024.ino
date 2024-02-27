@@ -3,6 +3,7 @@
 #define LANDED_ERR 2
 
 String comm = "GARBAGE";
+String packetRecieved = "GARBAGE";
 
 enum states {
   LAUNCH_WAIT,
@@ -24,6 +25,7 @@ int BCN = false;
 bool PARA_DEPLOYED = false;
 bool NOSE_RELEASED = false;
 
+bool simFlag = 0;
 float zero_alt_calib = 0;
 bool telemetry = true;
 bool tilt_calibration = false ;
@@ -78,6 +80,7 @@ void setup()
   NOSE_RELEASED = EEreadInt(5);
   PARA_DEPLOYED = EEreadInt(6);
   BCN = EEreadInt(7);
+  simFlag = EEreadInt(8);
   Serial.begin(9600);
   SDsetup();
   bnoSetup();
@@ -172,13 +175,11 @@ void loop() {
     packetCheck(comm);
     comm = "GARBAGE_VALUE";
   }
-
-
-  if ( packetAvailable() ) {
-    String packetRecieved = getOnePacket();
-    Serial.println(packetRecieved);
+  
+    recieveDataTelemetry();
     packetCheck(packetRecieved);
-  }
+    packetRecieved = "GARBAGE_VALUE";
+ 
   
   smartDelay();
 }

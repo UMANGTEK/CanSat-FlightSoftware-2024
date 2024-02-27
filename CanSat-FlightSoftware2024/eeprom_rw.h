@@ -32,4 +32,5 @@ void WriteALL(){
         EEwriteInt(NOSE_RELEASED, 5);
         EEwriteInt(PARA_DEPLOYED, 6);
         EEwriteInt(BCN, 7);
+        EEwriteInt(simFlag, 8);
 }

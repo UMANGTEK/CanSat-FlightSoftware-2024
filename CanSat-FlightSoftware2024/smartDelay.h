@@ -33,7 +33,7 @@ void periodic_Task() {
     
   //Make telemetry packet
   String telemetry_string = makeTelemetryPacket();
-  
+
   //Transmit data to GCS over Xbee
   if ( telemetry ){
     sendDataTelemetry(telemetry_string);

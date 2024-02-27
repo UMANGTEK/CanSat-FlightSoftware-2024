@@ -177,6 +177,7 @@ void packetCheck(String packet)
     else if ( p[2] == "DEPLOY_PARA" ){
         deployParachute();
         CMD_ECHO = "DEPLOY_PARA";
+        PARA_DEPLOYED = true ;
         WriteALL();
     }
     else if ( p[2] == "LOCK_PARA" ){

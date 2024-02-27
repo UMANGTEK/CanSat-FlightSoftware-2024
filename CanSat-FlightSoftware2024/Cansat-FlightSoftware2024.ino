@@ -83,7 +83,7 @@ void setup()
   bnoSetup();
   bmpSetup();
   gpsSetup();
-  //xbeeSetup();
+  xbeeSetup();
   servoSetup();
 
   BCN ? buzzerON() : buzzerOFF();
@@ -143,6 +143,7 @@ void loop() {
       if (checkAlt(120)) {
         deployParachute();
       }
+      
       if ( checkAlt(100) ) {
         currentState = HS_RELEASED;
         PARA_DEPLOYED = true ;
@@ -175,11 +176,9 @@ void loop() {
 
   if ( packetAvailable() ) {
     String packetRecieved = getOnePacket();
+    Serial.println(packetRecieved);
     packetCheck(packetRecieved);
   }
-
-
-
-
+  
   smartDelay();
 }

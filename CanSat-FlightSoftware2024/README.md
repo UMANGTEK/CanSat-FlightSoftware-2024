@@ -1,4 +1,4 @@
-<b>Version 2: 27th Fev, 2024 </b><br>
+<b>Version 2: 27th Feb, 2024 </b><br>
 -FSW actuates the servos at appropriate altitude. <br>
 -Prepares the telemetry, ready to be transmitted after a period of each second. <br>
 -All the sensors except GPS works. <br>

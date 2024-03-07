@@ -21,11 +21,23 @@ void loop()
   
   // Concatenate x1 and x0 into one 8-bit decimal value
   uint16_t combinedDec = (x1 * 256) + x0;   // Range of this value (0-16383) If pressure between both outlets is equal, op~ 8192 i.e half of total value
-  
+   /* 
+    *  100 m/s max range ---> 16383 (6465 Pa diff)
+    *  0 m/s -----> 8192 (~0 Pa diff)       (107790 - 0)
+    *  Considering linear system::::Pdiff =  ---------------- x (combinedDec - 8192)  
+    *                                      (16383 - 8192)
+   **/
   // Print the combined decimal value
   Serial.print("Combined Decimal: ");
   Serial.println(combinedDec);
-  
+
+float pressureDiff = ((6465.0)/(16383.0-8192.0))*(combinedDec - 8114.0);
+Serial.print("Ambient Pressure: ");
+Serial.println(pressureDiff);
+Serial.print("Speed: ");
+float airDensity = 1.293;
+float speed = sqrt((2*pressureDiff)/airDensity);
+Serial.println(speed); 
   //-------------extracting temperature signal----------------
 //  unsigned temperature = combinedDec;
 //  Serial.print("TEMP: ");  Serial.println(temperature, DEC);//

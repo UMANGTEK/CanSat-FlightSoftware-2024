@@ -12,7 +12,7 @@
 #define parachutePin1 22
 #define parachutePin2 25
 #define parachutePin3 36
-#define parachuteDeployAngle 120
+#define parachuteDeployAngle 180
 #define parachuteLockAngle 0
 
 

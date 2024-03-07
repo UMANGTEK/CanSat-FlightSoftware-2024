@@ -2,7 +2,7 @@ import time
 import picamera
 
 def record_video(duration, output_filename):
-    withpicamera.PiCamera() as camera:
+    with picamera.PiCamera() as camera:
         #(1280x720) (1920x1080)
         camera.resolution = (1280, 720)
         camera.framerate = 40

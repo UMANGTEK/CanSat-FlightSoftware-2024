@@ -18,9 +18,9 @@ void periodic_Task() {
   //BMP data
   bmpGetValues();
 
-
-
-
+  //Pitot Data
+  getPitotSpeed();
+  
   //Process recieved commmands
   //get packet
 //  if ( packetAvailable() ) {

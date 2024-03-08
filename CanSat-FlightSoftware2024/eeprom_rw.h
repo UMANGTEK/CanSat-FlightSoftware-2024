@@ -33,4 +33,5 @@ void WriteALL(){
         EEwriteInt(PARA_DEPLOYED, 6);
         EEwriteInt(BCN, 7);
         EEwriteInt(simFlag, 8);
+        EEwriteFloat(pitotCalibRestValue, 9);
 }

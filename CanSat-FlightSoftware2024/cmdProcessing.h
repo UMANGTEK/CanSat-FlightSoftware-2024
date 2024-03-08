@@ -183,14 +183,22 @@ void packetCheck(String packet)
     simFlag = 0;
     CMD_ECHO = "RESET";
 
+    if (pitotValid) {
+      pitotCalibration();
+    }
+    else {
+      CMD_ECHO = "PITOT_RESET_FAILED";
+    }
+
     if (bmpValid) {
       bmpGetValues();
       zero_alt_calib = altitude;
       WriteALL();
     }
     else {
-      CMD_ECHO = "RESET_FAILED";
+      CMD_ECHO = "BNO_RESET_FAILED";
     }
+    WriteALL();
   }
 
   else if ( p[2] == "DEPLOY_PARA" ) {

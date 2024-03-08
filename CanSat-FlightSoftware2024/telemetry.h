@@ -45,7 +45,7 @@ String makeTelemetryPacket()
     String TILT_X = printFloat(zAngle, tiltLen, 2, bnoValid);
     String TILT_Y = printFloat(yAngle, tiltLen, 2, bnoValid);
     String ROT_Z = printFloat(xAngle, 5, 1, bnoValid);
-    String AIR_SPEED = printFloat(pitotVelocity, 5, 1, true);
+    String AIR_SPEED = printFloat(pitotVelocity, 5, 1, pitotValid);
     String comma = ",";
 
     String packet = TEAM_ID;

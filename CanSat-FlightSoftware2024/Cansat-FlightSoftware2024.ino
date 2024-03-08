@@ -47,6 +47,7 @@ int gpsSecond = 0 , gpsMinute = 0 , gpsHour = 0  , gpsDay = 0 , gpsMonth = 0, gp
 bool timeValid = false , dateValid = false ;
 
 float pitotVelocity = 0;
+float pitotCalibRestValue = 8119.0;  //CombinedDec at rest 
 bool pitotValid = false;
 
 float adjusted_alt = 0 ;
@@ -66,8 +67,9 @@ bool SD_works = false;
 #include "./sensors/bmpsensor.h"
 #include "xbeeComms.h"
 #include "./sensors/bnosensor.h"
-#include "smartDelay.h"
+#include "./sensors/pitot_tube.h"
 #include "cmdProcessing.h"
+#include "smartDelay.h"
 
 void setup()
 {
@@ -81,8 +83,10 @@ void setup()
   PARA_DEPLOYED = EEreadInt(6);
   BCN = EEreadInt(7);
   simFlag = EEreadInt(8);
+  pitotCalibRestValue = EEreadFloat(9);
   Serial.begin(9600);
   SDsetup();
+  pitotSetup();
   bnoSetup();
   bmpSetup();
   gpsSetup();
@@ -95,11 +99,11 @@ void setup()
 }
 
 void loop() {
-  if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid() )
+  if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid() && pitotValid)
   {
     blink(greenLED, 500);
   }
-  else if (bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid() )
+  else if (bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid() && pitotValid)
   {
     greenON();
   }

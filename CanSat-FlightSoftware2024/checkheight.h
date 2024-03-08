@@ -83,7 +83,7 @@ bool notMoving(float ERR_DIFF){
       j++;
     }
   }
-  if ( j == MOVINGAVG-1 ){
+  if ( j == FRACTION*MOVINGAVG ){
     return true;
   }
   else {

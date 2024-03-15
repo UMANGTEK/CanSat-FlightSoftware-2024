@@ -1,5 +1,5 @@
 unsigned long previousMillis = 0;    // Stores the last time the task was executed
-
+unsigned long previousMillis_100MS = 0;
 
 void periodic_Task() {
    packet_count++;
@@ -54,12 +54,20 @@ void periodic_Task() {
 //SmartDelay for telemetry packet of 1 second
 void smartDelay() {
   unsigned long currentMillis = millis();  // Get the current time
-  
+   //Perfrom continious task
+    
+    
   // Check if it's time to perform the task
+   if (currentMillis - previousMillis_100MS >= MS_100) {
+    // Update the last execution time
+    previousMillis_100MS = currentMillis;
+    // Perform the task
+    getPitotSpeed();
+  }
+  
   if (currentMillis - previousMillis >= packetTimePeriod) {
     // Update the last execution time
     previousMillis = currentMillis;
-    
     // Perform the task
     periodic_Task();
   }

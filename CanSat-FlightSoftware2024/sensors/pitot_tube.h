@@ -1,5 +1,106 @@
 #include <Wire.h>
 #define SENSOR_ADDRESS 0x28
+#include <Arduino.h>
+
+class KalmanFilter {
+  public:
+    KalmanFilter(float dt, float process_noise, float measurement_noise) {
+      this->dt = dt;  // time step
+      A[0][0] = 1;
+      A[0][1] = dt;
+      A[1][0] = 0;
+      A[1][1] = 1;
+      
+      H[0][0] = 1;  // measurement matrix
+
+      this->process_noise = process_noise;  // process noise covariance
+      this->measurement_noise = measurement_noise;  // measurement noise covariance
+
+      Q[0][0] = process_noise;
+      Q[0][1] = 0;
+      Q[1][0] = 0;
+      Q[1][1] = process_noise;
+
+      R[0][0] = measurement_noise;
+
+      P[0][0] = 0;
+      P[0][1] = 0;
+      P[1][0] = 0;
+      P[1][1] = 0;
+
+      x[0][0] = 0;  // initial state
+      x[1][0] = 0;
+    }
+
+    void predict() {
+      // Predict the next state
+      float temp[2][1];
+      multiply(A, x, temp);
+      memcpy(x, temp, sizeof(x));
+
+      float temp2[2][2];
+      multiply(A, P, temp2);
+      transpose(A, temp2);
+      multiply(temp2, P, P);
+      add(P, Q, P);
+    }
+
+    void update(float z) {
+      // Update the state based on measurement
+      float y = z - H[0][0] * x[0][0];
+      float S = H[0][0] * P[0][0] * H[0][0] + R[0][0];
+      float K[2][1];
+      K[0][0] = P[0][0] * H[0][0] / S;
+      K[1][0] = P[1][0] * H[0][0] / S;
+
+      x[0][0] = x[0][0] + K[0][0] * y;
+      x[1][0] = x[1][0] + K[1][0] * y;
+
+      P[0][0] = (1 - K[0][0] * H[0][0]) * P[0][0];
+      P[1][0] = (1 - K[1][0] * H[0][0]) * P[1][0];
+    }
+
+    float getVelocity() {
+      return x[0][0];
+    }
+
+  private:
+    float dt;  // time step
+    float A[2][2];  // state transition matrix
+    float H[1][2];  // measurement matrix
+    float process_noise;  // process noise covariance
+    float measurement_noise;  // measurement noise covariance
+    float Q[2][2];  // process noise covariance matrix
+    float R[1][1];  // measurement noise covariance matrix
+    float P[2][2];  // state covariance matrix
+    float x[2][1];  // state vector
+
+    void multiply(float a[][2], float b[][1], float result[][1]) {
+      result[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0];
+      result[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0];
+    }
+
+    void multiply(float a[][2], float b[][2], float result[][2]) {
+      result[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0];
+      result[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1];
+      result[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0];
+      result[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1];
+    }
+
+    void add(float a[][2], float b[][2], float result[][2]) {
+      result[0][0] = a[0][0] + b[0][0];
+      result[0][1] = a[0][1] + b[0][1];
+      result[1][0] = a[1][0] + b[1][0];
+      result[1][1] = a[1][1] + b[1][1];
+    }
+
+    void transpose(float matrix[][2], float result[][2]) {
+      result[0][0] = matrix[0][0];
+      result[0][1] = matrix[1][0];
+      result[1][0] = matrix[0][1];
+      result[1][1] = matrix[1][1];
+    }
+};
 
 void pitotSetup() 
 {
@@ -25,6 +126,7 @@ void pitotCalibration()
 
 void getPitotSpeed() 
 {
+  KalmanFilter kf(dt, process_noise, measurement_noise);
   Wire.requestFrom(SENSOR_ADDRESS, 2);    // request 2 bytes from sensor
   byte x1 = Wire.read();
   byte x0 = Wire.read();
@@ -57,15 +159,9 @@ else
 }
 
 float pressureDiff = ((6465.0)/(16383.0-8192.0))*(combinedDec - pitotCalibRestValue);
-//Serial.print("Ambient Pressure: ");
-//Serial.println(pressureDiff);
-//Serial.print("Speed: ");
 float airDensity = 1.293;
-pitotVelocity = sqrt((2*pressureDiff)/airDensity);
-//Serial.println(speed); 
-  //-------------extracting temperature signal----------------
-//  unsigned temperature = combinedDec;
-//  Serial.print("TEMP: ");  Serial.println(temperature, DEC);//
-//  Serial.print("TEMP: ");  Serial.println(temperature, BIN);//
-//  Serial.println(" ");
+float pitotVelocity = sqrt((2*pressureDiff)/airDensity);
+kf.predict();
+kf.update(pitotVelocity);
+filterPitotVelocity = kf.getVelocity();
 }

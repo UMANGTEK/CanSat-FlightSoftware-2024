@@ -1,4 +1,5 @@
 #define packetTimePeriod 1000
+#define MS_100 100
 #define SEPARATION_ERR 30
 #define LANDED_ERR 2
 
@@ -46,8 +47,11 @@ bool satsValid = false, locValid = false, altValid = false;
 int gpsSecond = 0 , gpsMinute = 0 , gpsHour = 0  , gpsDay = 0 , gpsMonth = 0, gpsYear = 0 ;
 bool timeValid = false , dateValid = false ;
 
-float pitotVelocity = 0;
-float pitotCalibRestValue = 8119.0;  //CombinedDec at rest 
+float filterPitotVelocity = 0;
+float pitotCalibRestValue = 8192.0;  //CombinedDec at rest 
+float dt = 0.1;
+float process_noise = 5; //Error by prediction model
+float measurement_noise = 1;  //Error by sensor
 bool pitotValid = false;
 
 float adjusted_alt = 0 ;

@@ -13,8 +13,8 @@
 #define tempLen 5
 #define pressLen 5
 #define altiLen 7
-#define latiLen 7
-#define longiLen 7
+#define latiLen 9
+#define longiLen 9
 #define satLen 2
 #define tiltLen 7
 #define voltlen 4
@@ -38,9 +38,9 @@ String makeTelemetryPacket()
     String VOLTAGE = printFloat(voltage, voltlen, 2, true);     
     String PRESSURE = printFloat(adjusted_pressure, pressLen, 1, pressureValid);
     String GPS_TIME = printTime( gpsHour ,gpsMinute, gpsSecond, timeValid);
-    String GPS_ALTITUDE = printFloat(gpsAltitude, altiLen, 1, altValid);
-    String GPS_LATITUDE = printFloat(lat, latiLen, 6, locValid);
-    String GPS_LONGITUDE = printFloat(lng, longiLen, 6, locValid);
+    String GPS_ALTITUDE = printFloat(gpsAltitude, altiLen, 1, gpsValid);
+    String GPS_LATITUDE = printFloat(lat, latiLen, 6, gpsValid);
+    String GPS_LONGITUDE = printFloat(lng, longiLen, 6, gpsValid);
     String GPS_SATS = printInt(noSats, satLen, satsValid);
     String TILT_X = printFloat(zAngle, tiltLen, 2, bnoValid);
     String TILT_Y = printFloat(yAngle, tiltLen, 2, bnoValid);

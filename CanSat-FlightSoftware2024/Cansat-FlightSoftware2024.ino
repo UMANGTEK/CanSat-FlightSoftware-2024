@@ -41,8 +41,8 @@ bool bmpValid = false ;
 float xAngle = 0 , yAngle = 0 , zAngle = 0 , acceleration = 0 ;
 bool bnoValid = false ;
 
-float noSats = 0 , lat = 0 , lng = 0 , gpsAltitude = 0 ;
-bool satsValid = false, locValid = false, altValid = false;
+float noSats = 0 , lat = 0 , lng = 0 , gpsAltitude = 0 , gpsSpeed = 0 ;
+bool gpsValid = false, satsValid = true;
 
 int gpsSecond = 0 , gpsMinute = 0 , gpsHour = 0  , gpsDay = 0 , gpsMonth = 0, gpsYear = 0 ;
 bool timeValid = false , dateValid = false ;
@@ -103,11 +103,11 @@ void setup()
 }
 
 void loop() {
-  if (bmpValid && bnoValid && !timeValid && !dateValid && !satsValid && !locValid && !altValid && RTCvalid() && pitotValid)
+  if (bmpValid && bnoValid && !timeValid && !satsValid && !gpsValid && RTCvalid() && pitotValid)
   {
     blink(greenLED, 500);
   }
-  else if (bmpValid && bnoValid && timeValid && dateValid && satsValid && locValid && altValid && RTCvalid() && pitotValid)
+  else if (bmpValid && bnoValid && timeValid && satsValid && gpsValid && RTCvalid() && pitotValid)
   {
     greenON();
   }
@@ -155,7 +155,7 @@ void loop() {
         deployParachute();
       }
       
-      if ( checkAlt(100) ) {
+      if ( checkAlt(20) ) {
         currentState = HS_RELEASED;
         PARA_DEPLOYED = true ;
         deployParachute();

@@ -217,9 +217,10 @@ void packetCheck(String packet)
     CMD_ECHO = "DEPLOY_NOSE";
     WriteALL();
   }
-  else if ( p[2] == "LOCK_NOSE" ) {
-    lockNoseCone();
-    CMD_ECHO = "LOCK_NOSE";
+  else if ( p[2] == "DECENT" ) {
+    currentState = DECENT;
+//    lockNoseCone();
+//    CMD_ECHO = "LOCK_NOSE";
     WriteALL();
   }
 }

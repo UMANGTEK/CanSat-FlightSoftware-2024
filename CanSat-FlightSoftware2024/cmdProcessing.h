@@ -83,24 +83,24 @@ void packetCheck(String packet)
   else if (p[2] == "SIMP")                                      // Compulsory simulared pressure data receiving command
   {
     //Set pressure to recieved value
-    if ( currentMode == SIMULATION && simFlag == 0)
-    {
-      float tempPressure = p[3].toFloat();
-      if ( tempPressure != 0 ) {
-        adjusted_pressure = tempPressure / 100;
-        // impliment conversion from pressure to altitude
-        // 44330 * [1 - (P/p0)^(1/5.255) ]
-        adjusted_alt = ( 44330 * ( 1 - pow( (adjusted_pressure / 1013.25 ), (1 / 5.225) )  )) - zero_alt_calib;
-        updateAlt(adjusted_alt);
-        pressureValid = true;
-        zero_alt_calib = adjusted_alt;
-        adjusted_alt = 0;
-        simFlag = 1;
-        WriteALL();
-        CMD_ECHO = "SIMP";
-      }
-    }
-    else if ( currentMode == SIMULATION ) {
+//    if ( currentMode == SIMULATION && simFlag == 0)
+//    {
+//      float tempPressure = p[3].toFloat();
+//      if ( tempPressure != 0 ) {
+//        adjusted_pressure = tempPressure / 100;
+//        // impliment conversion from pressure to altitude
+//        // 44330 * [1 - (P/p0)^(1/5.255) ]
+//        adjusted_alt = ( 44330 * ( 1 - pow( (adjusted_pressure / 1013.25 ), (1 / 5.225) )  )) - zero_alt_calib;
+//        updateAlt(adjusted_alt);
+//        pressureValid = true;
+//        zero_alt_calib = adjusted_alt;
+//        adjusted_alt = 0;
+//        simFlag = 1;
+//        WriteALL();
+//        CMD_ECHO = "SIMP";
+//      }
+//    }
+     if ( currentMode == SIMULATION ) {
       float tempPressure = p[3].toFloat();
       if ( tempPressure != 0 ) {
         adjusted_pressure = tempPressure / 100;
@@ -217,10 +217,10 @@ void packetCheck(String packet)
     CMD_ECHO = "DEPLOY_NOSE";
     WriteALL();
   }
-  else if ( p[2] == "DECENT" ) {
-    currentState = DECENT;
-//    lockNoseCone();
-//    CMD_ECHO = "LOCK_NOSE";
+  else if ( p[2] == "LOCK_NOSE" ) {
+    //currentState = DECENT;
+    lockNoseCone();
+    CMD_ECHO = "LOCK_NOSE";
     WriteALL();
   }
 }

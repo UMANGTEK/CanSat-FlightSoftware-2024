@@ -2,6 +2,8 @@
 #define MS_100 100
 #define SEPARATION_ERR 30
 #define LANDED_ERR 2
+#include <Arduino.h>
+#include "TeensyThreads.h"
 
 String comm = "GARBAGE";
 String packetRecieved = "GARBAGE";
@@ -93,23 +95,25 @@ void setup()
   pitotSetup();
   bnoSetup();
   bmpSetup();
-  gpsSetup();
+  //gpsSetup();
   xbeeSetup();
   servoSetup();
 
   BCN ? buzzerON() : buzzerOFF();
   NOSE_RELEASED ? deployNoseCone() : lockNoseCone();
   PARA_DEPLOYED ? deployParachute() : lockPrachute();
+  threads.addThread(updateGPS);
 }
 
 void loop() {
-  if (bmpValid && bnoValid && !timeValid && !satsValid && !gpsValid && RTCvalid() && pitotValid)
-  {
-    blink(greenLED, 500);
-  }
-  else if (bmpValid && bnoValid && timeValid && satsValid && gpsValid && RTCvalid() && pitotValid)
+   
+   if (bmpValid && bnoValid && timeValid && satsValid && gpsValid && RTCvalid() && pitotValid)
   {
     greenON();
+  }
+  else if (bmpValid && bnoValid && RTCvalid() && pitotValid)
+  {
+    blink(greenLED, 500);
   }
   else
   {
@@ -155,7 +159,7 @@ void loop() {
         deployParachute();
       }
       
-      if ( checkAlt(20) ) {
+      if ( checkAlt(100) ) {
         currentState = HS_RELEASED;
         PARA_DEPLOYED = true ;
         deployParachute();

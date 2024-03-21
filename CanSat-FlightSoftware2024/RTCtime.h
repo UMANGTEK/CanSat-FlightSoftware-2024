@@ -19,7 +19,7 @@ void getRTCTime()
 void setTimeGps()
 {
     //gpsGetTime( &gpsSecond , &gpsMinute, &gpsHour , &gpsDay, &gpsMonth , &gpsYear , &dateValid , &timeValid);        
-    updateGPS();
+   // updateGPS();
     tm.Hour = gpsHour;
     tm.Minute = gpsMinute;
     tm.Second = gpsSecond;

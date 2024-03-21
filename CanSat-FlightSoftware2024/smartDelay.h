@@ -8,7 +8,8 @@ void periodic_Task() {
   //GPS data
 //  gpsGetTime( &gpsSecond , &gpsMinute, &gpsHour , &gpsDay, &gpsMonth , &gpsYear , &dateValid , &timeValid);
 //  gpsReading(&noSats , &lat , &lng , &gpsAltitude , &satsValid, &locValid  , &altValid );
-  updateGPS();
+
+  //updateGPS();
   
   //BNO data
   bnoGetValues();

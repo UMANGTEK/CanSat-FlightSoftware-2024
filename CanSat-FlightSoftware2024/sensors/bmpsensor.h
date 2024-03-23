@@ -29,7 +29,8 @@ void bmpGetValues(){
       pressureValid = false ;
     }
   }
-  else{
+  else
+  {
     bmpValid = true;
     temprature = bmp.readTemperature();
     altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA) ;

@@ -223,4 +223,10 @@ void packetCheck(String packet)
     CMD_ECHO = "LOCK_NOSE";
     WriteALL();
   }
+  else if ( p[2] == "MODE") {
+    if ( p[3] == "F")
+    {
+      currentMode = FLIGHT;
+    }
+  }
 }

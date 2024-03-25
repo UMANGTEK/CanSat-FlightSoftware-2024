@@ -20,10 +20,12 @@ void periodic_Task() {
   //BMP data
   prevAlt = altitude;
   bmpGetValues();
-  bmpSpeed = altitude - prevAlt;
+  bmpSpeed = abs(altitude - prevAlt);
   //Pitot Data
   getPitotSpeed();
-  
+
+  //Get speed from Pitot and BMP 
+  getAirSpeed();
   //Process recieved commmands
   //get packet
 //  if ( packetAvailable() ) {

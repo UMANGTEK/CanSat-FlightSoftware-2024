@@ -54,6 +54,9 @@ float pitotCalibRestValue = 8192.0;  //CombinedDec at rest
 float dt = 0.1;
 float process_noise = 5; //Error by prediction model
 float measurement_noise = 1;  //Error by sensor
+float pitotSpeedConstant = 0.3; //(0-1)
+float finalAirSpeed = 0;
+bool speedValid = false;
 bool pitotValid = false;
 
 float adjusted_alt = 0 ;
@@ -75,6 +78,7 @@ bool SD_works = false;
 #include "./sensors/bnosensor.h"
 #include "./sensors/pitot_tube.h"
 #include "cmdProcessing.h"
+#include "airspeed.h"
 #include "smartDelay.h"
 
 void setup()

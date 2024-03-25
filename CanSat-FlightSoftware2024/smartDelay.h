@@ -18,8 +18,9 @@ void periodic_Task() {
   readVoltage();
   
   //BMP data
+  prevAlt = altitude;
   bmpGetValues();
-
+  bmpSpeed = altitude - prevAlt;
   //Pitot Data
   getPitotSpeed();
   

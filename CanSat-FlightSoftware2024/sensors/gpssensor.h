@@ -69,7 +69,7 @@ void updateGPS() {
   gpsAltitude = GPS.altitude;
   lat = GPS.latitudeDegrees;
   lng = GPS.longitudeDegrees;
-  gpsSpeed = GPS.speed;
+  gpsSpeed = GPS.speed * 0.5144;
   }
   
 

@@ -1,5 +1,9 @@
 void getAirSpeed(){
-  if(bmpValid && pitotValid){
+  if(gpsValid && noSats>7){
+    finalAirSpeed = gpsSpeed;
+    speedValid = true;
+  }
+  else if(bmpValid && pitotValid){
     if((pitotSpeedConstant*(abs(filterPitotVelocity - bmpSpeed))) < 5 ){
       finalAirSpeed = pitotSpeedConstant*filterPitotVelocity + (1-pitotSpeedConstant)*bmpSpeed;  
     }

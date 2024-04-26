@@ -1,7 +1,7 @@
 unsigned long previousMillisLEDS = 0;
-#define redLED 6
-#define blueLED 4
-#define greenLED 5
+#define redLED 10
+#define blueLED 12
+#define greenLED 11
 #define buzzerPIN 2
 
 void led_buzzer_Setup(){

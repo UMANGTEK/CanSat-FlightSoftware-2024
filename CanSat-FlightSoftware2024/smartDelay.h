@@ -42,7 +42,7 @@ void periodic_Task() {
   //Transmit data to GCS over Xbee
   if ( telemetry ){
     sendDataTelemetry(telemetry_string);
-    //Serial.println(telemetry_string);
+    Serial.println(telemetry_string);
   }
 
   //Save Data to sd card  

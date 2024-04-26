@@ -8,11 +8,11 @@ XBee xbee = XBee();
 XBeeResponse response = XBeeResponse();
 ZBRxResponse rx = ZBRxResponse();
 ModemStatusResponse msr = ModemStatusResponse();
-XBeeAddress64 addr64 = XBeeAddress64(0x0013a200, 0x41F4267C);
+XBeeAddress64 addr64 = XBeeAddress64(0x0013A200, 0x41F4267C);  
 bool gotResponse,ack,associated,errorAfterPacketRecieved,errorReadingPacket,errorAfterResponseRecieved;
 
 // Set up a new SoftwareSerial object
-#define SoftSerial Serial7
+#define SoftSerial Serial2
 
 
 String xbeeCommandinput = "";
@@ -36,7 +36,7 @@ void sendDataTelemetry(String data)
 
     ZBTxRequest zbTx = ZBTxRequest(addr64, payload, sizeof(payload));
     xbee.send(zbTx);
-    Serial.println(data);
+    //Serial.println(data);
 }
 
 bool packetAvailable(){

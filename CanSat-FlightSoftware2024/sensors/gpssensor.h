@@ -1,6 +1,6 @@
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>
-#define GPS_SoftwareSerial Serial5
+#define GPS_SoftwareSerial Serial8
 //SoftwareSerial GPS_SoftwareSerial(35, 34); // RX, TX (connect your GPS module's TX pin to Teensy pin 3, and RX pin to Teensy pin 2)
 Adafruit_GPS GPS(&GPS_SoftwareSerial);
 

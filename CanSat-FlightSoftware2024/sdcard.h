@@ -1,5 +1,5 @@
 #include <SD.h>
-#define blueLED 4
+#define blueLED 12
 
 const int chipSelect = BUILTIN_SDCARD;
 

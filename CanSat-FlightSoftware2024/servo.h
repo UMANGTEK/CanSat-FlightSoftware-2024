@@ -4,14 +4,14 @@
 //Down Facing --> 23/24/33
  
 #define nosePin1 23
-#define nosePin2 24
-#define nosePin3 33
+#define nosePin2 14
+#define nosePin3 36
 #define noseDeployAngle 60
 #define noseLockAngle 0
 
-#define parachutePin1 22
-#define parachutePin2 25
-#define parachutePin3 36
+#define parachutePin1 15
+#define parachutePin2 37
+#define parachutePin3 22
 #define parachuteDeployAngle 180
 #define parachuteLockAngle 0
 

@@ -14,7 +14,7 @@ GPIO.setup(CAMLED, GPIO.OUT, initial=False)
 
 while True:
     current_time = time.strftime("%H%M%S")
-    output_filenme = f"/home/janus/Recordings/video_{current_time}.h264"
+    output_filenme = f"/home/janus1/Recordings_1/video_{current_time}.h264"
     GPIO.output(CAMLED, True)
     output = FileOutput(output_filename)
     picam2.start_recording(encoder, output, quality=Quality.HIGH)

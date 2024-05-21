@@ -1,4 +1,4 @@
-#define packetTimePeriod 1000
+#define packetTimePeriod 500
 #define MS_100 100
 #define SEPARATION_ERR 30
 #define LANDED_ERR 2

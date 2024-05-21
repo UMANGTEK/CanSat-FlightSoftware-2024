@@ -1,5 +1,5 @@
  #define MOVINGAVG 5
-#define ALT_DIFF 2  //Minimum difference between two altitude values to consider CanSat moving
+#define ALT_DIFF 1  //Minimum difference between two altitude values to consider CanSat moving
 #define FRACTION 0.6    //If MOVINGAVG is 10 and FRACTION is set to 0.7, the function will return true if at least 70% (7 out of 10) of the altitude values are inc or dec.
 float arr[MOVINGAVG]={0,0,0,0,0}; // add more zeros here if u are increasing MOVINGAVG
 /*

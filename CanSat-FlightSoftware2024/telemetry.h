@@ -46,10 +46,12 @@ String makeTelemetryPacket()
     String TILT_Y = printFloat(yAngle, tiltLen, 2, bnoValid);
     String ROT_Z = printFloat(xAngle, 5, 1, bnoValid);
     String AIR_SPEED = printFloat(finalAirSpeed, 5, 1, speedValid);
+    String BMP_SPEED = printFloat(bmpSpeed, 5, 1, bmpValid);
+    String GPS_SPEED = printFloat(gpsSpeed, 5, 1, gpsValid);
     String comma = ",";
 
     String packet = TEAM_ID;
-    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + CMD_ECHO;
+    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + BMP_SPEED + GPS_SPEED + CMD_ECHO;
     CMD_ECHO = " " ;
     return packet;
 }

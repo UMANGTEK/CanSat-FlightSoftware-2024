@@ -1,21 +1,23 @@
+from picamera2.encoders import H264Encoder, Quality
+from picamera2.outputs import FileOutput
+fro picamera2 import Picamera2
 import time
-import picamera
+import TPi.GPIO as GPIO
 
-def record_video(duration, output_filename):
-    with picamera.PiCamera() as camera:
-        #(1280x720) (1920x1080)
-        camera.resolution = (1280, 720)
-        camera.framerate = 40
-        camera.start_recording(output_filename)
-        camera.wait_recording(duration)
-        camera.stop_recording()
+picam2 = Picamera2()
+picam2.configure(picam2.create_video_configuration())
+encoder = H264Encoder()
+CAMLED = 40
+duration 60
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(CAMLED, GPIO.OUT, initial=False)
 
-if __name__ == "__main__":
-    recording_duration = 60
-
-
-    while True:
-        current_time = time.strftime("%H%M%S")
-        output_filename = f"/home/janus/Recordings/video_{current_time}.h264"
-        record_video(recording_duration, output_filename)
-        print(f"Video recorded and saved as {output_filename}")
+while True:
+    current_time = time.strftime("%H%M%S")
+    output_filenme = f"/home/janus/Recordings/video_{current_time}.h264"
+    GPIO.output(CAMLED, True)
+    output = FileOutput(output_filename)
+    picam2.start_recording(encoder, output, quality=Quality.HIGH)
+    time.sleep(duration)
+    picam2.stop_recording()
+    GPIO.output(CAMLED, False)

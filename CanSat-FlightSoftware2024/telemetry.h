@@ -51,7 +51,7 @@ String makeTelemetryPacket()
     String comma = ",";
 
     String packet = TEAM_ID;
-    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + BMP_SPEED + GPS_SPEED + CMD_ECHO;
+    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + CMD_ECHO + comma + BMP_SPEED + comma + GPS_SPEED + comma + filterPitotVelocity;
     CMD_ECHO = " " ;
     return packet;
 }

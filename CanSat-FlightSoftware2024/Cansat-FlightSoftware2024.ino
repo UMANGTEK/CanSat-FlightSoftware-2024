@@ -36,6 +36,7 @@ bool simulation_enabled = false;
 
 String CMD_ECHO = "";
 float voltage = 0;
+float voltage_percent = 0;
 
 float temprature = 0 , altitude = 0 , pressure = 0, prevAlt = 0, bmpSpeed = 0 ;
 bool bmpValid = false ;

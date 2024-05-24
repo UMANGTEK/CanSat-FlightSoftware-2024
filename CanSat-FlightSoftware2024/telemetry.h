@@ -35,7 +35,8 @@ String makeTelemetryPacket()
     String PACKET_COUNT = printInt(packet_count, packetLength, true); 
     String ALTITUDE = printFloat(adjusted_alt, altitudeLen, 1,pressureValid);
     String TEMPERATURE = printFloat(temprature, tempLen, 1,bmpValid);
-    String VOLTAGE = printFloat(voltage, voltlen, 2, true);     
+    String VOLTAGE = printFloat(voltage, voltlen, 2, true);   
+    String VOLT_PERCENT = printInt(voltage_percent, 3, true);  
     String PRESSURE = printFloat(adjusted_pressure, pressLen, 1, pressureValid);
     String GPS_TIME = printTime( gpsHour ,gpsMinute, gpsSecond, timeValid);
     String GPS_ALTITUDE = printFloat(gpsAltitude, altiLen, 1, gpsValid);
@@ -48,10 +49,11 @@ String makeTelemetryPacket()
     String AIR_SPEED = printFloat(finalAirSpeed, 5, 1, speedValid);
     String BMP_SPEED = printFloat(bmpSpeed, 5, 1, bmpValid);
     String GPS_SPEED = printFloat(gpsSpeed, 5, 1, gpsValid);
+    String PITOT_VELOCITY = printFloat(filterPitotVelocity, 5, 1, pitotValid);
     String comma = ",";
 
     String packet = TEAM_ID;
-    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + CMD_ECHO + comma + BMP_SPEED + comma + GPS_SPEED + comma + filterPitotVelocity;
+    packet += comma + MISSION_TIME + comma + PACKET_COUNT + comma + str_modes[currentMode] + comma + str_states[currentState]+ comma + ALTITUDE + comma + AIR_SPEED +comma + (NOSE_RELEASED?"P":"N") + comma + (PARA_DEPLOYED?"C":"N") + comma + TEMPERATURE + comma + VOLTAGE + comma + PRESSURE  + comma + GPS_TIME + comma + GPS_ALTITUDE + comma + GPS_LATITUDE + comma + GPS_LONGITUDE + comma + GPS_SATS + comma + TILT_X + comma + TILT_Y + comma + ROT_Z + comma + CMD_ECHO + comma + VOLT_PERCENT + comma + BMP_SPEED + comma + GPS_SPEED + comma + PITOT_VELOCITY;
     CMD_ECHO = " " ;
     return packet;
 }

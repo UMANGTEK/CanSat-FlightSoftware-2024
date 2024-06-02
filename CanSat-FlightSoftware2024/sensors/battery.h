@@ -13,5 +13,5 @@ void readVoltage()
 {
   float vJun = analogRead(battPin)*3.3/1023; 
   voltage = vJun*(r1 + r2)/r1;
-  voltage_percent = ((voltage - 7.4)/(8.2-7.4))*100;
+  voltage_percent = ((voltage - 7.6)/(8.0-7.6))*100;
 }

@@ -25,18 +25,48 @@ void bmpGetValues(){
   if (!bmp.begin(0x76)) {
     //Failed to read DATA
     bmpValid=false;
+    if(gpsValid){
+    altitude= gpsAltitude;
+    altitudeValid= true;
+    }else{
+      altitudeValid= false;
+    }
     if ( currentMode == FLIGHT){
       pressureValid = false ;
+      if(gpsValid){
+      gpsAltitude= gpsAltitude-refgpsAltitude;
+      adjusted_altitude= gpsAltitude;
+      altitudeValid= true;
+      }else{
+      altitudeValid= false;
+      }
     }
   }
   else
   {
     bmpValid = true;
     temprature = bmp.readTemperature();
-    altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA) ;
+    if(gpsValid){
+    bmpAltitude = bmp.readAltitude(SEALEVELPRESSURE_HPA) ;
+    altitude= (bmpAltitude+gpsAltitude)/2;
+    altitudeValid= true;
+    }else{
+      bmpAltitude = bmp.readAltitude(SEALEVELPRESSURE_HPA) ;
+      altitude= bmpAltitude;
+      altitudeValid= true;
+    }
     pressure = bmp.readPressure() / 1000.0;
     if ( currentMode == FLIGHT ) {
-      adjusted_alt = altitude - zero_alt_calib;
+      if(gpsValid){
+      gpsAltitude= gpsAltitude-refgpsAltitude;
+      bmp_adjusted_alt = bmpAltitude - zero_alt_calib;
+      adjusted_alt= (bmp_adjusted_alt+gpsAltitude)/2
+      altitudeValid= true;
+      }else{
+        bmp_adjusted_alt = bmpAltitude - zero_alt_calib;
+        adjusted_alt= bmp_adjusted_alt;
+        altitudeValid= true;
+      }
       adjusted_pressure = pressure;
       pressureValid = bmpValid;
     }

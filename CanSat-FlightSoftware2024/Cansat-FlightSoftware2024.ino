@@ -65,6 +65,7 @@ float adjusted_alt = 0 ;
 float bmp_adjusted_alt=0;
 float adjusted_pressure = 0 ;
 bool pressureValid = false ;
+bool altitudeValid= false;
 bool SD_works = false;
 
 #include "servo.h"

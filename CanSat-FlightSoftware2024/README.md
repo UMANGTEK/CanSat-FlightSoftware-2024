@@ -5,7 +5,5 @@
 -CMD Processing updated as per new Mission req, optional CMD could be added. <br>
 -LEDs functionality has been defined. RED:Power GREEN:Sensors Check BLUE:SD_Card Write Check <br>
 -Comunication from XBee work. <br>
-<br>
-Task yet to be done: <br>
--xBee Comms file to be checked and included in major FSW. <br>
--Pitot Tube code needs to be tested in wind tunnel <br>
+-xBee Comms file checked and included in major FSW. <br>
+-Pitot Tube code tested in wind tunnel <br>

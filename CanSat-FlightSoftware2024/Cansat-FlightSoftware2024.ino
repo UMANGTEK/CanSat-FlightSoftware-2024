@@ -38,13 +38,14 @@ String CMD_ECHO = "";
 float voltage = 0;
 float voltage_percent = 0;
 
-float temprature = 0 , altitude = 0 , pressure = 0, prevAlt = 0, bmpSpeed = 0 ;
+float temprature = 0 , bmpAltidtude=0 , altitude = 0, pressure = 0, prevAlt = 0, bmpSpeed = 0 ;
 bool bmpValid = false ;
 
 float xAngle = 0 , yAngle = 0 , zAngle = 0 , acceleration = 0 ;
 bool bnoValid = false ;
 
 float noSats = 0 , lat = 0 , lng = 0 , gpsAltitude = 0 , gpsSpeed = 0 ;
+float refgpsAltitude=0; //To be changed to reference altitude at launch site
 bool gpsValid = false, satsValid = true;
 
 int gpsSecond = 0 , gpsMinute = 0 , gpsHour = 0  , gpsDay = 0 , gpsMonth = 0, gpsYear = 0 ;
@@ -61,8 +62,10 @@ bool speedValid = false;
 bool pitotValid = false;
 
 float adjusted_alt = 0 ;
+float bmp_adjusted_alt=0;
 float adjusted_pressure = 0 ;
 bool pressureValid = false ;
+bool altitudeValid= false;
 bool SD_works = false;
 
 #include "servo.h"
